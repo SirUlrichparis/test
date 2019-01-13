@@ -16,9 +16,22 @@ export class AppComponent {
   constructor(db: AngularFirestore) {
     this.collection = db.collection('/test');
     this.items = db.collection('/test').valueChanges();
+
+
+    
   }
 
-  addItem(item) {
-    this.collection.add(item);
+  addItem(doc, item) {
+    // this.collection.add(item);
+    this.collection.doc(doc).set(item);
+  }
+
+  deleteDoc(documentName) {
+    // this.collection.add(item);
+    this.collection.doc(documentName).delete().then(function () {
+      console.log("Document successfully deleted!");
+    }).catch(function (error) {
+      console.error("Error removing document: ", error);
+    });
   }
 }
